@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -18,5 +19,10 @@ public class AreaDaoTest extends BaseTest {
     public void testFindArea() {
         List<Area> areaList = areaDao.findArea();
         assertEquals(2, areaList.size());
+    }
+
+    @Test
+    public void getProperties() {
+        System.out.println(System.getProperties());
     }
 }

@@ -38,7 +38,11 @@ dependencies {
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
     // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl
-    testCompile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.13.0'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.13.0'
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.0'
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-web
+    compile group: 'org.apache.logging.log4j', name: 'log4j-web', version: '2.13.0'
     // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
     providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
@@ -53,6 +57,10 @@ dependencies {
     compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.18'
     // https://mvnrepository.com/artifact/com.alibaba/druid
     compile group: 'com.alibaba', name: 'druid', version: '1.1.21'
+    // https://mvnrepository.com/artifact/org.slf4j/jcl-over-slf4j
+    compile group: 'org.slf4j', name: 'jcl-over-slf4j', version: '1.7.30'
+    // https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j
+    compile group: 'org.slf4j', name: 'jul-to-slf4j', version: '1.7.30'
 }
 
 test {
