@@ -61,6 +61,8 @@ dependencies {
     compile group: 'org.slf4j', name: 'jcl-over-slf4j', version: '1.7.30'
     // https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j
     compile group: 'org.slf4j', name: 'jul-to-slf4j', version: '1.7.30'
+    // https://mvnrepository.com/artifact/net.coobird/thumbnailator
+    compile group: 'net.coobird', name: 'thumbnailator', version: '0.4.8'
 }
 
 test {
