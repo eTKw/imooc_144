@@ -10,6 +10,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -36,7 +37,7 @@ public class ImageUtil {
         System.out.println(basePath);
         Thumbnails.of(new File("D:\\project\\imooc_144\\o2o\\src\\main\\resources\\h1.png"))
                 .size(200, 200)
-                .watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath)),0.25f)
+                .watermark(Positions.BOTTOM_LEFT, ImageIO.read(new File(basePath)),1f)
                 .outputQuality(0.8f)
                 .toFile("D:\\project\\imooc_144\\o2o\\src\\main\\resources\\h11.png");
     }
@@ -47,9 +48,9 @@ public class ImageUtil {
      * @param targetAddr
      * @return
      */
-    public static String generateThumbnail(File thumbnail, String  targetAddr) {
+    public static String generateThumbnail(InputStream thumbnail, String  targetAddr, String fileName) {
         String realFileName = getRandomFileName();
-        String extension = getFileExtension(thumbnail);
+        String extension = getFileExtension(fileName);
         makeDirPath(targetAddr);
         String relativeAddr = targetAddr + realFileName + extension;
         logger.debug("相对路径：" + relativeAddr);
@@ -82,19 +83,18 @@ public class ImageUtil {
 
     /**
      * 获取扩展名
-     * @param file
+     * @param
      * @return
      */
-    private static String getFileExtension(File file) {
-        String originalFileName = file.getName();
-        return originalFileName.substring(originalFileName.lastIndexOf("."));
+    private static String getFileExtension(String fileName) {
+        return fileName.substring(fileName.lastIndexOf("."));
     }
 
     /**
      * 生成随机文件名，毫秒+五伪随机数
      * @return
      */
-    private static String getRandomFileName() {
+    public static String getRandomFileName() {
 //        获取随机的五位数
         int randomNum = r.nextInt(89999) + 10000;
         String currentTimeStr = simpleDateFormat.format(new Date());

@@ -8,6 +8,10 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
 repositories {
     mavenCentral()
 }
@@ -63,12 +67,12 @@ dependencies {
     compile group: 'org.slf4j', name: 'jul-to-slf4j', version: '1.7.30'
     // https://mvnrepository.com/artifact/net.coobird/thumbnailator
     compile group: 'net.coobird', name: 'thumbnailator', version: '0.4.8'
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.2'
+
 }
 
 test {
     useJUnitPlatform()
-}
-
-tasks.withType(JavaCompile) {
-    options.encoding = "UTF-8"
+    systemProperty "file.encoding", "utf-8"
 }
