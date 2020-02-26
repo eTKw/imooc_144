@@ -1,11 +1,11 @@
 $(function () {
     var init_url = '/o2o/shopadmin/getshopinitinfo';
     var register_shop_url = '/o2o/shopadmin/registershop';
-    alert(init_url);
     getShopInitInfo();
 
     function getShopInitInfo() {
         $.getJSON(init_url, function (data) {
+            alert(data.success);
             if (data.success) {
                 var temp_html = '';
                 var temp_area_html = '';
@@ -35,7 +35,7 @@ $(function () {
                 areaId: $('#shop-area').find('option').not(function () {
                     return !this.selected;
                 }).data('id')
-            }
+            };
             var shopImg = $('#shop-img')[0].files[0];
             var formData = new FormData();
             formData.append('shopImg', shopImg);
