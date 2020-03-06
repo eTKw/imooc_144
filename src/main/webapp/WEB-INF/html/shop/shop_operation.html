@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+    <link href="../resources/css/jquery.toast.min.css" rel="stylesheet">
     <title>Hello, world!</title>
     <style>
         .btn-block {
@@ -19,7 +19,7 @@
 <body>
 <div class="container">
     <header>
-    <h1 class="text-center">商店信息</h1>
+        <h1 class="text-center">商店信息</h1>
     </header>
     <form>
         <div class="form-group row">
@@ -28,7 +28,7 @@
                 <input type="text" class="form-control" id="shop-name" placeholder="商品名称">
             </div>
         </div>
-<!--        商铺分类 下拉列表-->
+        <!--        商铺分类 下拉列表-->
         <div class="form-group row">
             <label for="shop-category" class="col-sm-2 col-form-label">商品分类</label>
             <div class="col-sm-10">
@@ -36,7 +36,7 @@
                 </select>
             </div>
         </div>
-<!--        区域分类 下拉列表-->
+        <!--        区域分类 下拉列表-->
         <div class="form-group row">
             <label for="shop-area" class="col-sm-2 col-form-label">所属区域</label>
             <div class="col-sm-10">
@@ -44,47 +44,60 @@
                 </select>
             </div>
         </div>
-<!--        详细地址 text-->
+        <!--        详细地址 text-->
         <div class="form-group row">
             <label for="shop-addr" class="col-sm-2 col-form-label">详细地址</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="shop-addr" placeholder="详细地址">
             </div>
         </div>
-<!--        联系电话 text-->
+        <!--        联系电话 text-->
         <div class="form-group row">
             <label for="shop-phone" class="col-sm-2 col-form-label">联系电话</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="shop-phone" placeholder="联系电话">
             </div>
         </div>
-<!--        缩略图 上传控件-->
+        <!--        缩略图 上传控件-->
         <div class="form-group row">
             <label for="shop-img" class="col-sm-2 col-form-label">缩略图</label>
             <div class="col-sm-10">
                 <input type="file" class="form-control" id="shop-img">
             </div>
         </div>
-<!--        店铺简介 textarea-->
+        <!--        店铺简介 textarea-->
         <div class="form-group row">
             <label for="shop-desc" class="col-sm-2 col-form-label">店铺简介</label>
             <div class="col-sm-10">
                 <textarea class="form-control" id="shop-desc" placeholder="店铺简介"></textarea>
             </div>
         </div>
-<!--        验证码-->
+        <!--        验证码-->
+
+        <div class="form-group row">
+            <label for="kaptcha" class="col-sm-2 col-form-label">验证码</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="kaptcha" placeholder="验证码">
+            </div>
+            <div class="col-sm-4">
+                <img id="captcha_img" alt="点击更换" title="点击更换"
+                     onclick="changeVerifyCode(this)" src="../Kaptcha">
+            </div>
+        </div>
         <div class="form-group row">
             <div class="col-sm-6">
-                <button type="submit" class="btn btn-danger btn-lg btn-block">返回</button>
+                <button type="button" class="btn btn-danger btn-lg btn-block">返回</button>
             </div>
             <div class="col-sm-6">
-                <button type="submit" class="btn btn-success btn-lg btn-block" id="submit">提交</button>
+                <button type="button" class="btn btn-success btn-lg btn-block" id="submit">提交</button>
             </div>
         </div>
     </form>
 </div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
@@ -92,6 +105,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
+<script src="../resources/js/jquery.toast.min.js"></script>
 <script type="text/javascript" src="../resources/js/shop/shop_operation.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../resources/js/common/common.js" charset="UTF-8"></script>
 </body>
 </html>

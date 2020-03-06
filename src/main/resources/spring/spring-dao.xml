@@ -8,15 +8,39 @@
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
 <!--    数据库连接池-->
-    <bean class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close" id="dataSource">
+    <bean class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close" id="abstractDataSource" abstract="true">
 <!--        连接池属性-->
-        <property name="driverClassName" value="${jdbc_driver}"/>
-        <property name="url" value="${jdbc_url}"/>
-        <property name="username" value="${jdbc_username}"/>
-        <property name="password" value="${jdbc_password}"/>
+
 <!--        私有属性-->
         <property name="maxActive" value="30"/>
         <property name="minIdle" value="10"/>
+    </bean>
+
+    <bean id="master" parent="abstractDataSource">
+        <property name="driverClassName" value="${jdbc_driver}"/>
+        <property name="url" value="${jdbc_master_url}"/>
+        <property name="username" value="${jdbc_username}"/>
+        <property name="password" value="${jdbc_master_password}"/>
+    </bean>
+
+    <bean id="slave" parent="abstractDataSource">
+        <property name="driverClassName" value="${jdbc_driver}"/>
+        <property name="url" value="${jdbc_slave_url}"/>
+        <property name="username" value="${jdbc_username}"/>
+        <property name="password" value="${jdbc_slave_password}"/>
+    </bean>
+<!--    配置动态数据源，就是路由数据源所对应的名称-->
+    <bean id="dynamicDataSource" class="cn.nyanpasus.o2o.dao.split.DynamicDataSource">
+        <property name="targetDataSources">
+            <map>
+                <entry value-ref="master" key="master"/>
+                <entry value-ref="slave" key="slave"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy" id="dataSource">
+        <property name="targetDataSource" ref="dynamicDataSource"/>
     </bean>
 
 <!--    SqlSessionFactory-->

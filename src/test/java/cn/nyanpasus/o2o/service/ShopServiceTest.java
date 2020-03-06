@@ -34,7 +34,7 @@ public class ShopServiceTest extends BaseTest {
         shop.setOwner(owner);
         shop.setArea(area);
         shop.setShopCategory(shopCategory);
-        shop.setShopName("测试店铺3");
+        shop.setShopName("测试店铺4");
         shop.setShopDesc("测试3");
         shop.setShopAddr("测试3");
         shop.setPhone("测试3");
@@ -45,5 +45,17 @@ public class ShopServiceTest extends BaseTest {
         FileInputStream fileInputStream = new FileInputStream(shopImg);
         ShopExecution shopExecution = shopService.addShop(shop, fileInputStream, shopImg.getName());
         assertEquals(ShopStateEnum.CHECK.getState(), shopExecution.getState());
+    }
+
+    @Test
+    public void testModifyShop() throws FileNotFoundException {
+        Shop shop = new Shop();
+        shop.setShopId(1L);
+        shop.setShopName("测试过的店铺");
+        File shopImg = new File("D:\\project\\imooc_144\\o2o\\src\\main\\resources\\h2.png");
+        FileInputStream inputStream = new FileInputStream(shopImg);
+        ShopExecution shopExecution = shopService.modifyShop(shop, inputStream, shopImg.getName());
+        //存在延迟
+        System.out.println("图片地址 " + shopExecution.getShop().getShopImg());
     }
 }

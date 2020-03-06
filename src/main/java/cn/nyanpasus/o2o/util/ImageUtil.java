@@ -101,5 +101,22 @@ public class ImageUtil {
         return currentTimeStr + randomNum;
     }
 
+    /**
+     * 判断是文件路径还是目录路径
+     * @param storePath
+     */
+    public static void deleteFileOrPath(String storePath) {
+        File fileOrPath = new File(PathUtil.getImgBasePath() + storePath);
+        if (fileOrPath.exists()) {
+            if (fileOrPath.isDirectory()) {
+                File[] files = fileOrPath.listFiles();
+                for (File file : files) {
+                    file.delete();
+                }
+            }
+            fileOrPath.delete();
+        }
+    }
+
 
 }

@@ -13,4 +13,9 @@
 <!--        <setting name="logImpl" value="STDOUT_LOGGING"/>-->
         <setting name="logImpl" value="SLF4J"/>
     </settings>
+    <plugins>
+        <plugin interceptor="cn.nyanpasus.o2o.dao.split.DynamicDataSourceInterceptor">
+
+        </plugin>
+    </plugins>
 </configuration>
