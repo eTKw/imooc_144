@@ -42,7 +42,7 @@ $(function () {
                 let temp_html = '';
                 let temp_area_html = '';
                 data.shopCategoryList.map(function (item, index) {
-                    temp_html += '<option data_id="' + item.shopCategoryId + '">' + item.shopCategoryName + '</option>'
+                    temp_html += '<option data-id="' + item.shopCategoryId + '">' + item.shopCategoryName + '</option>'
                 });
                 data.areaList.map(function (item, index) {
                     temp_area_html += '<option data-id="' + item.areaId + '">' + item.areaName + '</option>'
@@ -63,6 +63,11 @@ $(function () {
             shop.shopAddr = $('#shop-addr').val();
             shop.phone = $('#shop-phone').val();
             shop.shopDesc = $('#shop-desc').val();
+            // shop.shopCategory = {
+            //     shopCategoryId: $('#shop-category').find('option').not(function () {
+            //         return !this.selected;
+            //     }).data('id')
+            // };
             shop.shopCategory = {
                 shopCategoryId: $('#shop-category').find('option').not(function () {
                     return !this.selected;
