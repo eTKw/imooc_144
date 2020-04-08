@@ -1,6 +1,7 @@
 package cn.nyanpasus.o2o.service;
 
 import cn.nyanpasus.o2o.BaseTest;
+import cn.nyanpasus.o2o.dto.ImageHolder;
 import cn.nyanpasus.o2o.dto.ShopExecution;
 import cn.nyanpasus.o2o.entity.Area;
 import cn.nyanpasus.o2o.entity.PersonInfo;
@@ -43,7 +44,8 @@ public class ShopServiceTest extends BaseTest {
         shop.setAdvice("审核中");
         File shopImg = new File("D:\\project\\imooc_144\\o2o\\src\\main\\resources\\h2.png");
         FileInputStream fileInputStream = new FileInputStream(shopImg);
-        ShopExecution shopExecution = shopService.addShop(shop, fileInputStream, shopImg.getName());
+        ImageHolder imageHolder = new ImageHolder(shopImg.getName(), fileInputStream);
+        ShopExecution shopExecution = shopService.addShop(shop, imageHolder);
         assertEquals(ShopStateEnum.CHECK.getState(), shopExecution.getState());
     }
 
@@ -54,8 +56,20 @@ public class ShopServiceTest extends BaseTest {
         shop.setShopName("测试过的店铺");
         File shopImg = new File("D:\\project\\imooc_144\\o2o\\src\\main\\resources\\h2.png");
         FileInputStream inputStream = new FileInputStream(shopImg);
-        ShopExecution shopExecution = shopService.modifyShop(shop, inputStream, shopImg.getName());
+        ImageHolder imageHolder = new ImageHolder(shopImg.getName(), inputStream);
+        ShopExecution shopExecution = shopService.modifyShop(shop, imageHolder);
         //存在延迟
         System.out.println("图片地址 " + shopExecution.getShop().getShopImg());
+    }
+
+    @Test
+    public void testGetShopList() {
+        Shop shop = new Shop();
+        ShopCategory shopCategory = new ShopCategory();
+        shopCategory.setShopCategoryId(2L);
+        shop.setShopCategory(shopCategory);
+        ShopExecution shopExecution = shopService.getShopList(shop, 2, 2);
+        System.out.println(shopExecution.getShopList().size());
+        System.out.println(shopExecution.getCount());
     }
 }

@@ -9,7 +9,9 @@ import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -61,5 +63,24 @@ public class ShopDaoTest extends BaseTest {
         Shop shop = shopDao.queryByShopId(shopId);
         System.out.println("areaId" + shop.getArea().getAreaId());
         System.out.println("areaName" + shop.getArea().getAreaName());
+    }
+
+    @Test
+    public void testQueryShopListAndCount() {
+        Shop shop = new Shop();
+        PersonInfo owner = new PersonInfo();
+        owner.setUserId(1L);
+        shop.setOwner(owner);
+        List<Shop> shopList = shopDao.queryShopList(shop, 0, 5);
+        int i = shopDao.queryShopCount(shop);
+        System.out.println(shopList.size());
+        System.out.println(i);
+        ShopCategory shopCategory = new ShopCategory();
+        shopCategory.setShopCategoryId(3L);
+        shop.setShopCategory(shopCategory);
+        shopList = shopDao.queryShopList(shop, 0, 2);
+        i = shopDao.queryShopCount(shop);
+        System.out.println(shopList.size());
+        System.out.println(i);
     }
 }

@@ -1,5 +1,6 @@
 package cn.nyanpasus.o2o.controller.shopAdmin;
 
+import cn.nyanpasus.o2o.dto.ImageHolder;
 import cn.nyanpasus.o2o.dto.ShopExecution;
 import cn.nyanpasus.o2o.entity.Area;
 import cn.nyanpasus.o2o.entity.PersonInfo;
@@ -12,7 +13,6 @@ import cn.nyanpasus.o2o.service.ShopService;
 import cn.nyanpasus.o2o.util.CodeUtil;
 import cn.nyanpasus.o2o.util.HttpServletRequestUtil;
 import cn.nyanpasus.o2o.util.ImageUtil;
-import cn.nyanpasus.o2o.util.PathUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,8 +121,9 @@ public class ShopManagementController {
             shop.setOwner(owner);
             ShopExecution shopExecution;
             try {
+                ImageHolder imageHolder = new ImageHolder(shopImg.getOriginalFilename(), shopImg.getInputStream());
                 System.out.println("开始添加");
-                shopExecution = shopService.addShop(shop, shopImg.getInputStream(), shopImg.getOriginalFilename());
+                shopExecution = shopService.addShop(shop, imageHolder);
                 System.out.println("添加完成");
                 if (shopExecution.getState() == ShopStateEnum.CHECK.getState()) {
                     modelMap.put("success", true);
@@ -209,9 +210,10 @@ private Map<String, Object> modifyShop(HttpServletRequest request) {
         ShopExecution shopExecution;
         try {
             if (shopImg == null) {
-                shopExecution = shopService.modifyShop(shop, null, null);
+                shopExecution = shopService.modifyShop(shop, null);
             } else {
-                shopExecution = shopService.modifyShop(shop, shopImg.getInputStream(), shopImg.getOriginalFilename());
+                ImageHolder imageHolder = new ImageHolder(shopImg.getOriginalFilename(), shopImg.getInputStream());
+                shopExecution = shopService.modifyShop(shop, imageHolder);
             }
 
             if (shopExecution.getState() == ShopStateEnum.SUCCESS.getState()) {
@@ -233,4 +235,51 @@ private Map<String, Object> modifyShop(HttpServletRequest request) {
     return modelMap;
 }
 
+    @RequestMapping(value = "/getshoplist", method = RequestMethod.GET)
+    @ResponseBody
+    private ModelMap getShopList(HttpServletRequest request) {
+        ModelMap modelMap = new ModelMap();
+        PersonInfo user = new PersonInfo();
+        user.setUserId(1L);
+        user.setName("test");
+        request.getSession().setAttribute("user", user);
+        user = (PersonInfo) request.getSession().getAttribute("user");
+//        ArrayList<Shop> arrayList = new ArrayList<>();
+        try {
+            Shop shopCondition = new Shop();
+            shopCondition.setOwner(user);
+            ShopExecution shopExecution = shopService.getShopList(shopCondition, 0, 100);
+            modelMap.put("shopList", shopExecution.getShopList());
+            modelMap.put("user", user);
+            modelMap.put("success", true);
+        } catch (Exception e) {
+            modelMap.put("success", false);
+            modelMap.put("errMsg", e.getMessage());
+        }
+        return modelMap;
+    }
+
+    @RequestMapping(value = "/getshopmanagementinfo", method = RequestMethod.GET)
+    @ResponseBody
+    private ModelMap getShopManagementInfo(HttpServletRequest request) {
+        ModelMap modelMap = new ModelMap();
+        long shopId = HttpServletRequestUtil.getLong(request, "shopId");
+        if (shopId <= 0) {
+            Object currentShop = request.getSession().getAttribute("currentShop");
+            if (currentShop == null) {
+                modelMap.put("redirect", true);
+                modelMap.put("url", "/o2o/shopadmin/shoplist");
+            } else {
+                Shop shop = (Shop) currentShop;
+                modelMap.put("redirect", false);
+                modelMap.put("shopId", shop.getShopId());
+            }
+        } else {
+            Shop shop = new Shop();
+            shop.setShopId(shopId);
+            request.getSession().setAttribute("currentShop", shop);
+            modelMap.put("redirect", false);
+        }
+        return modelMap;
+    }
 }

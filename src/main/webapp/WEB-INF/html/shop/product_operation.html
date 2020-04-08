@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="../resources/css/jquery.toast.min.css" rel="stylesheet">
+    <title>Hello, world!</title>
+    <style>
+        .btn-block {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1 class="text-center">商品编辑</h1>
+    </header>
+    <form>
+        <div class="form-group row">
+            <label for="product-name" class="col-sm-2 col-form-label">商品名称</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="product-name" placeholder="商品名称">
+            </div>
+        </div>
+        <!--        商铺分类 下拉列表-->
+        <div class="form-group row">
+            <label for="category" class="col-sm-2 col-form-label">商品分类</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="category">
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="priority" class="col-sm-2 col-form-label">优先级</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="priority" placeholder="优先级">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="normal-price" class="col-sm-2 col-form-label">原价</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="normal-price" placeholder="可选">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="promotion-price" class="col-sm-2 col-form-label">现价</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="promotion-price" placeholder="可选">
+            </div>
+        </div>
+        <!--        缩略图 上传控件-->
+        <div class="form-group row">
+            <label for="small-img" class="col-sm-2 col-form-label">缩略图</label>
+            <div class="col-sm-10">
+                <input type="file" class="form-control" id="small-img">
+            </div>
+        </div>
+        <div class="form-group row detail-img-div">
+            <label for="detail-img" class="col-sm-2 col-form-label">详情图片</label>
+            <div class="col-sm-10"  id="detail-img">
+                <input type="file" class="form-control detail-img">
+            </div>
+        </div>
+        <!--        店铺简介 textarea-->
+        <div class="form-group row">
+            <label for="product-desc" class="col-sm-2 col-form-label">商品描述</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" id="product-desc" placeholder="商品描述"></textarea>
+            </div>
+        </div>
+        <!--        验证码-->
+
+        <div class="form-group row">
+            <label for="kaptcha" class="col-sm-2 col-form-label">验证码</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="kaptcha" placeholder="验证码">
+            </div>
+            <div class="col-sm-4">
+                <img id="captcha_img" alt="点击更换" title="点击更换"
+                     onclick="changeVerifyCode(this)" src="../Kaptcha">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-6">
+                <a href="/o2o/shop/productmanage" type="button" class="btn btn-danger btn-lg btn-block">返回商品管理</a>
+            </div>
+            <div class="col-sm-6">
+                <a href="#" type="button" class="btn btn-success btn-lg btn-block" id="submit">提交</a>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+<script src="../resources/js/jquery.toast.min.js"></script>
+<script type="text/javascript" src="../resources/js/shop/product_operation.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../resources/js/common/common.js" charset="UTF-8"></script>
+</body>
+</html>

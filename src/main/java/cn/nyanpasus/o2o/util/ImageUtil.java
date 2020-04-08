@@ -1,5 +1,6 @@
 package cn.nyanpasus.o2o.util;
 
+import cn.nyanpasus.o2o.dto.ImageHolder;
 import jdk.nashorn.internal.ir.CallNode;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
@@ -48,16 +49,16 @@ public class ImageUtil {
      * @param targetAddr
      * @return
      */
-    public static String generateThumbnail(InputStream thumbnail, String  targetAddr, String fileName) {
+    public static String generateThumbnail(ImageHolder thumbnail, String  targetAddr) {
         String realFileName = getRandomFileName();
-        String extension = getFileExtension(fileName);
+        String extension = getFileExtension(thumbnail.getImageName());
         makeDirPath(targetAddr);
         String relativeAddr = targetAddr + realFileName + extension;
         logger.debug("相对路径：" + relativeAddr);
         File dest = new File(PathUtil.getImgBasePath() + relativeAddr);
         logger.debug("绝对路径：" + PathUtil.getImgBasePath() + relativeAddr);
         try {
-            Thumbnails.of(thumbnail)
+            Thumbnails.of(thumbnail.getImage())
                     .size(200, 200)
                     .watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath)),0.25f)
                     .outputQuality(0.8f)
@@ -116,6 +117,28 @@ public class ImageUtil {
             }
             fileOrPath.delete();
         }
+    }
+
+    public static String generateNormalImg(ImageHolder thumbnail, String targetAddr) {
+        String realFileName = getRandomFileName();
+        String extension = getFileExtension(thumbnail.getImageName());
+        makeDirPath(targetAddr);
+        String relativeAddr = targetAddr + realFileName + extension;
+        logger.debug("相对路径：" + relativeAddr);
+        File dest = new File(PathUtil.getImgBasePath() + relativeAddr);
+        logger.debug("绝对路径：" + PathUtil.getImgBasePath() + relativeAddr);
+        try {
+            Thumbnails.of(thumbnail.getImage())
+                    .size(337, 640)
+                    .watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath)),0.25f)
+                    .outputQuality(0.9f)
+                    .toFile(dest);
+        } catch (IOException e) {
+            logger.error(e.toString());
+            e.printStackTrace();
+        }
+        return relativeAddr;
+
     }
 
 
