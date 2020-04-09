@@ -197,4 +197,50 @@ public class ProductManagementController {
         }
         return modelMap;
     }
+
+    @RequestMapping(value = "/getproductlistbyshop", method = RequestMethod.GET)
+    @ResponseBody
+    private ModelMap getProductListByShop(HttpServletRequest request) {
+        ModelMap modelMap = new ModelMap();
+
+        int pageIndex = HttpServletRequestUtil.getInt(request, "pageIndex");
+
+        int pageSize = HttpServletRequestUtil.getInt(request, "pageSize");
+        Shop currentShop = (Shop) request.getSession().getAttribute("currentShop");
+        if ((pageIndex > -1) && (pageSize > -1) && (currentShop != null) && (currentShop.getShopId() != null)) {
+            long productCategoryId = HttpServletRequestUtil.getLong(request, "productCategoryId");
+            String productName = HttpServletRequestUtil.getString(request, "productName");
+            Product productCondition = compactProductCondition(currentShop.getShopId(), productCategoryId, productName);
+            ProductExecution productExecution = productService.getProductList(productCondition, pageIndex, pageSize);
+            modelMap.put("productList", productExecution.getProductList());
+            modelMap.put("count", productExecution.getCount());
+            modelMap.put("success", true);
+
+        } else {
+            modelMap.put("success", false);
+            modelMap.put("errMsg", "empty pageSize or pageIndex or shopId");
+        }
+        return modelMap;
+    }
+
+    private Product compactProductCondition(Long shopId, long productCategoryId, String productName) {
+        Product product = new Product();
+        Shop shop = new Shop();
+        shop.setShopId(shopId);
+        product.setShop(shop);
+        if (productCategoryId != -1L) {
+            ProductCategory productCategory = new ProductCategory();
+            productCategory.setProductCategoryId(productCategoryId);
+            product.setProductCategory(productCategory);
+        }
+        if (productName != null) {
+            product.setProductName(productName);
+        }
+        return product;
+    }
+
+    @RequestMapping(value = "/productmanagement", method = RequestMethod.GET)
+    private String productCategoryManage() {
+        return "shop/product_management";
+    }
 }

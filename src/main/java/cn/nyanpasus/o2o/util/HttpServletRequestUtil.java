@@ -21,7 +21,7 @@ public class HttpServletRequestUtil {
 
     public static Double getDouble(HttpServletRequest request, String key) {
         try {
-            return Double.parseDouble(key);
+            return Double.parseDouble(request.getParameter(key));
         } catch (NumberFormatException e) {
             return -1d;
         }
@@ -29,7 +29,7 @@ public class HttpServletRequestUtil {
 
     public static boolean getBoolean(HttpServletRequest request, String key) {
         try {
-            return Boolean.parseBoolean(key);
+            return Boolean.parseBoolean(request.getParameter(key));
         } catch (Exception e) {
             return false;
         }

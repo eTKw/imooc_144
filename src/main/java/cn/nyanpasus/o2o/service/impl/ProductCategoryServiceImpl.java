@@ -1,6 +1,7 @@
 package cn.nyanpasus.o2o.service.impl;
 
 import cn.nyanpasus.o2o.dao.ProductCategoryDao;
+import cn.nyanpasus.o2o.dao.ProductDao;
 import cn.nyanpasus.o2o.dto.ProductCategoryExecution;
 import cn.nyanpasus.o2o.entity.ProductCategory;
 import cn.nyanpasus.o2o.enums.ProductCategoryStateEnum;
@@ -16,6 +17,9 @@ import java.util.List;
 public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Autowired
     private ProductCategoryDao productCategoryDao;
+
+    @Autowired
+    private ProductDao productDao;
     @Override
     public List<ProductCategory> getProductCategoryList(long shopId) {
         return productCategoryDao.queryProductCategoryList(shopId);
@@ -43,6 +47,14 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Transactional
     public ProductCategoryExecution deleteProductCategory(long productCategoryId, long shopId) throws ProductCategoryOperationException {
         //TODO 将下方的商品类别ID变为空
+        try {
+            int effectedNum = productDao.updateProductCategoryToNull(productCategoryId);
+            if (effectedNum < 0) {
+                throw new RuntimeException("商品类别更新失败");
+            }
+        } catch (RuntimeException e) {
+            throw new RuntimeException("deleteProductCategory error:" + e.getMessage());
+        }
         try {
             int effectedNum = productCategoryDao.deleteProductCategory(productCategoryId, shopId);
             if (effectedNum <= 0) {

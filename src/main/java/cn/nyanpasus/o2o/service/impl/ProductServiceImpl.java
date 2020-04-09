@@ -10,6 +10,7 @@ import cn.nyanpasus.o2o.enums.ProductStateEnum;
 import cn.nyanpasus.o2o.exception.ProductOperationException;
 import cn.nyanpasus.o2o.service.ProductService;
 import cn.nyanpasus.o2o.util.ImageUtil;
+import cn.nyanpasus.o2o.util.PageCalculator;
 import cn.nyanpasus.o2o.util.PathUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -100,6 +101,17 @@ public class ProductServiceImpl implements ProductService {
         } else {
             return new ProductExecution(ProductStateEnum.EMPTY);
         }
+    }
+
+    @Override
+    public ProductExecution getProductList(Product productCondition, int pageIndex, int pageSize) {
+        int rowIndex = PageCalculator.calculateRowIndex(pageIndex, pageSize);
+        List<Product> productList = productDao.queryProductList(productCondition, rowIndex, pageSize);
+        int count = productDao.queryProductCount(productCondition);
+        ProductExecution productExecution = new ProductExecution();
+        productExecution.setProductList(productList);
+        productExecution.setCount(count);
+        return productExecution;
     }
 
     private void deleteProductImgList(Long productId) {

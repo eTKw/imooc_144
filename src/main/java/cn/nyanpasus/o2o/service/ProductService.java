@@ -19,4 +19,6 @@ public interface ProductService {
     ProductExecution modifyProduct(Product product,
                                    ImageHolder thumbnail,
                                    List<ImageHolder> productImgList) throws ProductOperationException;
+
+    ProductExecution getProductList(Product productCondition, int pageIndex, int pageSize);
 }

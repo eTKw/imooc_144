@@ -5,6 +5,7 @@ import cn.nyanpasus.o2o.entity.Product;
 import cn.nyanpasus.o2o.entity.ProductCategory;
 import cn.nyanpasus.o2o.entity.ProductImg;
 import cn.nyanpasus.o2o.entity.Shop;
+import jdk.nashorn.internal.ir.CallNode;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -109,5 +110,25 @@ public class ProductDaoTest extends BaseTest {
         product.setProductCategory(productCategory);
         int i = productDao.updateProduct(product);
         assertEquals(1, i);
+    }
+
+    @Test
+    public void testQueryProductList() throws Exception {
+        Product productCondition = new Product();
+        List<Product> productList = productDao.queryProductList(productCondition, 0, 3);
+        assertEquals(3, productList.size());
+        int count = productDao.queryProductCount(productCondition);
+        assertEquals(8, count);
+        productCondition.setProductName("测试2");
+        productList = productDao.queryProductList(productCondition,0,3);
+        assertEquals(2, productList.size());
+        count = productDao.queryProductCount(productCondition);
+        assertEquals(2,count);
+    }
+
+    @Test
+    public void testUpdateProductCategoryToNull() {
+        int effectedNum = productDao.updateProductCategoryToNull(5L);
+        assertEquals(1, effectedNum);
     }
 }
