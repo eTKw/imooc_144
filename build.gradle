@@ -73,7 +73,8 @@ dependencies {
     compile group: 'com.github.penggle', name: 'kaptcha', version: '2.3.2'
     // https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
     compile group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
-
+    // https://mvnrepository.com/artifact/org.postgresql/postgresql
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.12'
 }
 
 test {
