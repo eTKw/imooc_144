@@ -1,7 +1,6 @@
 package cn.nyanpasus.o2o.util;
 
 import cn.nyanpasus.o2o.dto.ImageHolder;
-import jdk.nashorn.internal.ir.CallNode;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
 import org.slf4j.Logger;
@@ -11,7 +10,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -50,10 +48,7 @@ public class ImageUtil {
      * @return
      */
     public static String generateThumbnail(ImageHolder thumbnail, String  targetAddr) {
-        String realFileName = getRandomFileName();
-        String extension = getFileExtension(thumbnail.getImageName());
-        makeDirPath(targetAddr);
-        String relativeAddr = targetAddr + realFileName + extension;
+        String relativeAddr = getString(thumbnail, targetAddr);
         logger.debug("相对路径：" + relativeAddr);
         File dest = new File(PathUtil.getImgBasePath() + relativeAddr);
         logger.debug("绝对路径：" + PathUtil.getImgBasePath() + relativeAddr);
@@ -120,10 +115,7 @@ public class ImageUtil {
     }
 
     public static String generateNormalImg(ImageHolder thumbnail, String targetAddr) {
-        String realFileName = getRandomFileName();
-        String extension = getFileExtension(thumbnail.getImageName());
-        makeDirPath(targetAddr);
-        String relativeAddr = targetAddr + realFileName + extension;
+        String relativeAddr = getString(thumbnail, targetAddr);
         logger.debug("相对路径：" + relativeAddr);
         File dest = new File(PathUtil.getImgBasePath() + relativeAddr);
         logger.debug("绝对路径：" + PathUtil.getImgBasePath() + relativeAddr);
@@ -139,6 +131,13 @@ public class ImageUtil {
         }
         return relativeAddr;
 
+    }
+
+    private static String getString(ImageHolder thumbnail, String targetAddr) {
+        String realFileName = getRandomFileName();
+        String extension = getFileExtension(thumbnail.getImageName());
+        makeDirPath(targetAddr);
+        return targetAddr + realFileName + extension;
     }
 
 
