@@ -127,9 +127,10 @@ public class ShopManagementController {
                 System.out.println("添加完成");
                 if (shopExecution.getState() == ShopStateEnum.CHECK.getState()) {
                     modelMap.put("success", true);
-                    List<Shop> shopList = (List<Shop>)request.getSession().getAttribute("shopList");
+                    List<Shop> shopList = (List<Shop>) request.getSession().getAttribute("shopList");
+//                    List<Shop> shopList = null;
                     if (shopList == null || shopList.size() == 0) {
-                        shopList = new ArrayList<>();
+                        shopList = new ArrayList<Shop>();
                     }
                     shopList.add(shopExecution.getShop());
                     request.getSession().setAttribute("shopList", shopList);
